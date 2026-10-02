@@ -1,2 +1,4 @@
-def main() -> None:
-    print("Hello from remote-mcp!")
+from remote_mcp.server import main
+
+
+__all__ = ["main"]
