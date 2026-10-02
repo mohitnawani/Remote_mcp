@@ -2,8 +2,19 @@ from fastmcp import FastMCP
 import os
 import sqlite3
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "expenses.db")
-CATEGORIES_PATH = os.path.join(os.path.dirname(__file__), "categories.json")
+import tempfile
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Configure EXPENSE_DATA_DIR to a writable persistent folder in production.
+DATA_DIR = os.environ.get(
+    "EXPENSE_DATA_DIR",
+    os.path.join(tempfile.gettempdir(), "expense_tracker"),
+)
+os.makedirs(DATA_DIR, exist_ok=True)
+
+DB_PATH = os.path.join(DATA_DIR, "expenses.db")
+CATEGORIES_PATH = os.path.join(BASE_DIR, "categories.json")
 
 mcp = FastMCP("ExpenseTracker")
 
